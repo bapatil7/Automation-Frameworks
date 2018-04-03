@@ -2,6 +2,7 @@ package com.test.ui.acceptancetest.steps;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jbehave.core.annotations.When;
 
 import com.test.ui.pages.SearchPage;
 
@@ -17,4 +18,11 @@ public class SearchStep extends ScenarioSteps{
 		super(pages);
 		this.searchPage=getPages().get(SearchPage.class);		
 	}
+	
+	@When("user navigates to google page")
+	public void navigateToGooglePage()
+	{
+		this.searchPage.navigateToGooglePage();
+	}
+	
 }
