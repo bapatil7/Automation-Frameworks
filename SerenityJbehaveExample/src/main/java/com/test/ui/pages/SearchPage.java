@@ -1,6 +1,12 @@
 package com.test.ui.pages;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
+
+import com.test.ui.utils.WebElementFunctions;
+import com.test.ui.utils.Util;
 
 import net.thucydides.core.pages.PageObject;
 import net.thucydides.core.util.EnvironmentVariables;
@@ -20,6 +26,21 @@ public class SearchPage extends PageObject {
 		//getDriver().get(System.getProperty("webdriver.base.url"));		
 		String url = variables.getProperty("webdriver.base.url");
 		getDriver().get(url);
+	}
+	
+	public void enterSearchText(String searchText) throws IOException
+	{
+		WebElementFunctions.tb_EnterText(Util.getXpath(getClass().getSimpleName(),"searchTextBox"),searchText,getDriver());
+		WebElementFunctions.btn_Click(Util.getXpath(getClass().getSimpleName(),"searchButton"),getDriver());
+	}
+	
+	public void searchLinkDisplayed() {
+		try {
+			assertThat("searched record link is not displayed",WebElementFunctions.isWebElementDisplayed(Util.getXpath(getClass().getSimpleName(),"searchedRecordLink"), getDriver()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

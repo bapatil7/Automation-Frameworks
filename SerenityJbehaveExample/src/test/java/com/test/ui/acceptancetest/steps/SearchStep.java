@@ -1,7 +1,11 @@
 package com.test.ui.acceptancetest.steps;
 
+import java.io.IOException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jbehave.core.annotations.Named;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
 import com.test.ui.pages.SearchPage;
@@ -25,4 +29,13 @@ public class SearchStep extends ScenarioSteps{
 		this.searchPage.navigateToGooglePage();
 	}
 	
+	@When("performs search with '$searchText'")	
+	public void performsSearchWith(final @Named("searchText") String searchText) throws IOException {
+	  this.searchPage.enterSearchText(searchText);
+	}
+	
+	@Then("valid search link is displayed")	
+	public void validSearchLinkIsDisplayed() {
+	  this.searchPage.searchLinkDisplayed();
+	}
 }
