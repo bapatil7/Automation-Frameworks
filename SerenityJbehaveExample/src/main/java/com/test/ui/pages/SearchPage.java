@@ -28,10 +28,15 @@ public class SearchPage extends PageObject {
 		getDriver().get(url);
 	}
 	
-	public void enterSearchText(String searchText) throws IOException
+	public void enterSearchText(String searchText) 
 	{
-		WebElementFunctions.tb_EnterText(Util.getXpath(getClass().getSimpleName(),"searchTextBox"),searchText,getDriver());
-		WebElementFunctions.btn_Click(Util.getXpath(getClass().getSimpleName(),"searchButton"),getDriver());
+		try {
+			WebElementFunctions.tb_EnterText(Util.getXpath(getClass().getSimpleName(),"searchTextBox"),searchText,getDriver());
+			WebElementFunctions.btn_Click(Util.getXpath(getClass().getSimpleName(),"searchButton"),getDriver());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 	
 	public void searchLinkDisplayed() {

@@ -34,6 +34,11 @@ public class SearchStep extends ScenarioSteps{
 	  this.searchPage.enterSearchText(searchText);
 	}
 	
+	@When("performs search with is $searchText")
+	public void performsSearchWith1(final @Named("searchText") String searchText) {
+		this.searchPage.enterSearchText(searchText);
+	}
+	
 	@Then("valid search link is displayed")	
 	public void validSearchLinkIsDisplayed() {
 	  this.searchPage.searchLinkDisplayed();
