@@ -4,8 +4,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import java.io.IOException;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import com.test.ui.utils.WebElementFunctions;
+import com.test.ui.lang.PPConstants;
 import com.test.ui.utils.Util;
 
 import net.thucydides.core.pages.PageObject;
@@ -13,6 +16,9 @@ import net.thucydides.core.util.EnvironmentVariables;
 import net.thucydides.core.util.SystemEnvironmentVariables;
 
 public class SearchPage extends PageObject {
+	
+	@FindBy(css=".multiple > li:nth-child(3)")
+	private WebElement kpwbanner;
 	
 	EnvironmentVariables variables = SystemEnvironmentVariables.createEnvironmentVariables();
 	
@@ -46,6 +52,10 @@ public class SearchPage extends PageObject {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean checkKPWBanner() {
+		return this.kpwbanner.getText().equalsIgnoreCase(PPConstants.LABEL_FASTERPAYMENT);
 	}
 
 }
