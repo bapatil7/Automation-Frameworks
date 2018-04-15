@@ -12,7 +12,7 @@
         <serenity.cucumber.version>1.9.3</serenity.cucumber.version>
         <encoding>UTF-8</encoding>
         <tags></tags>
-        <parallel.tests>4</parallel.tests>
+        <parallel.tests>2</parallel.tests>
         <webdriver.base.url>https://www.google.co.in</webdriver.base.url>       
   </properties>
   <dependencies>
@@ -83,6 +83,37 @@
   
   <build>
   	<plugins>
+  	<plugin>
+                <groupId>com.github.temyers</groupId>
+                <artifactId>cucumber-jvm-parallel-plugin</artifactId>
+                <version>4.2.0</version>
+                <executions>
+                    <execution>
+                        <id>generateRunners</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>generateRunners</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Mandatory -->
+                            <!-- List of package names to scan for glue code. -->
+                            <glue>
+                                <package>com.test.ui.acceptancetest.steps</package>
+                            </glue>
+                            <!-- <outputDirectory>${project.build.directory}/generated-test-sources/cucumber</outputDirectory>-->
+                            <parallelScheme>FEATURE</parallelScheme>
+                            <customVmTemplate>src/test/resources/cucumber-serenity-runner.vm</customVmTemplate>
+                            <tags></tags>
+                            <!--<filterFeaturesByTags>true</filterFeaturesByTags>
+                            <featuresDirectory>src/test/resources/features/</featuresDirectory>
+                            <cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>
+                            <format>html</format>
+                            <strict>true</strict>
+                            <monochrome>true</monochrome>-->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
     		<artifactId>maven-assembly-plugin</artifactId>
@@ -101,7 +132,7 @@
     			</execution>
     		</executions>
   		</plugin>
-  		<plugin>
+  		<!-- <plugin>
   		<artifactId>maven-surefire-plugin</artifactId>
   		<executions>
   			<execution>
@@ -111,7 +142,19 @@
   				</configuration>
   			</execution>
   		</executions>  		
-  		</plugin>
+  		</plugin>-->
+  		<plugin>
+    		<groupId>org.apache.maven.plugins</groupId>
+    		<artifactId>maven-surefire-plugin</artifactId>
+    		<version>2.19</version>
+    		<configuration> 
+        		<forkCount>5</forkCount>
+        		<reuseForks>true</reuseForks>
+        		<includes>
+            		<include>**/*IT.class</include>
+        		</includes>
+    		</configuration>
+		</plugin>
   		<plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.20</version>
@@ -127,7 +170,8 @@
                     </systemPropertyVariables>
                     <parallel>classes</parallel>
                     <threadCount>${parallel.tests}</threadCount>
-                    <forkCount>${parallel.tests}</forkCount>
+                    <perCoreThreadCount>true</perCoreThreadCount>
+                    <!--<forkCount>${parallel.tests}</forkCount>-->
                 </configuration>
                 <executions>
                     <execution>
@@ -154,7 +198,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>            
   	</plugins>
   </build>
 </project>
